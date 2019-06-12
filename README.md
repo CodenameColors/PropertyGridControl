@@ -8,5 +8,5 @@ There is also a obserableDictionary that is used to "bind" the properties you cr
 
 
 Here's an example!
-[Imgur](https://imgur.com/lCqNYfi)
-![img]https://i.imgur.com/lCqNYfi.png
+[Property Grid being used in my game engine project!](https://imgur.com/lCqNYfi)
+
