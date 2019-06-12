@@ -5,3 +5,7 @@ so i made one.
 
 This control uses a grid, and creates and places the UI controls like textbox, Comboboxes, and checkboxs to the screen.
 There is also a obserableDictionary that is used to "bind" the properties you create/Add with your C# code!
+
+
+Here's an example!
+![Control in use in my game engine](https://imgur.com/a/SevClSA)
