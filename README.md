@@ -8,4 +8,4 @@ There is also a obserableDictionary that is used to "bind" the properties you cr
 
 
 Here's an example!
-![Control in use in my game engine](https://imgur.com/lCqNYfi)
+[Imgur](https://imgur.com/lCqNYfi)
