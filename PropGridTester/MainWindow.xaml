@@ -15,10 +15,13 @@
 		</Grid.RowDefinitions>
 
 		<mm:PropGrid Name="ttt">
-			
+
 		</mm:PropGrid>
 
-		<Button Grid.Row="1" Height="30" Width="70" Content="Testing!" Click="Button_Click"/>
-
+		<Button Grid.Row="1" Height="30" Width="70" Content="Add Testing!" Click="Button_Click" RenderTransformOrigin="-1.143,0.55" Margin="9,17,413,53"/>
+		<Button Grid.Row="1" Height="30" Width="70" Content="Clear Testing!" Click="Button1_Click" RenderTransformOrigin="-1.143,0.55" Margin="84,17,338,53"/>
+		<Button Grid.Row="1" Height="30" Width="70" Content="Get Testing!" Click="Button2_Click" RenderTransformOrigin="-1.143,0.55" Margin="159,17,263,53"/>
+		<Label Content="Status:" Grid.Row="1" Height="30" VerticalAlignment="Bottom" Margin="10,0,0,7" Background="#00000000" HorizontalAlignment="Left" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="White" />
+		<TextBox Grid.Row="1" Height="30" VerticalAlignment="Bottom" Margin="61,0,9,7" />
 	</Grid>
 </Window>

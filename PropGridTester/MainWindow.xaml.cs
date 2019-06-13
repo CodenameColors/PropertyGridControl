@@ -61,5 +61,15 @@ namespace PropGridTester
 			ttt.AddProperty("Choice Time!", new ComboBox(), name);
 			this.PropDictionary = ttt.PropDictionary; //update...
 		}
+
+		private void Button1_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Button2_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

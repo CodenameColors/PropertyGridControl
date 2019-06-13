@@ -5,6 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 						 mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="500">
+
+	<UserControl.Resources>
+
+		<ContextMenu x:Key="RemoveProp_CM">
+			<MenuItem Header="Remove Property" Click="RemoveProperty_Click"/>
+		</ContextMenu>
+
+		<ContextMenu x:Key="ClearProps_CM">
+			<MenuItem Header="Clear Properties" Click="ClearProps_Click"/>
+		</ContextMenu>
+
+	</UserControl.Resources>
+	
     <Grid>
 			<ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
 				<Grid x:Name="Property_Grid">
@@ -13,16 +26,16 @@
 						<ColumnDefinition Width="70*"/>
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
-						<RowDefinition Height="40"/>
+						<RowDefinition Height="40" MouseRightButtonDown="OpenClearCM"/>
 					<RowDefinition Height="10"/>
 					<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
-
-					<Label Grid.Row="0" Grid.Column="0" Content="Property" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-					<Label Grid.Row="0" Grid.Column="1" Content="Data" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-					<GridSplitter x:Name="gridSplitterVert" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="3"  Background="#FF868686" />
-					<GridSplitter x:Name="gridSplitterHori" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"  Background="#FF868686" />
-
+				
+				<Label Grid.Row="0" Grid.Column="0" Content="Property" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+				<Label Grid.Row="0" Grid.Column="1" Content="Data" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+				<GridSplitter x:Name="gridSplitterVert" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="3"  Background="#FF868686" />
+				<GridSplitter x:Name="gridSplitterHori" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"  Background="#FF868686" />
+				<Border Grid.RowSpan="2" Grid.ColumnSpan="2" MouseRightButtonDown="OpenClearCM" Background="#02000000"/>
 				<Grid x:Name="InnerPropGrid" Grid.Row="2" Grid.ColumnSpan="2">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="30*"/>
