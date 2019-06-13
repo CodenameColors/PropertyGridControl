@@ -56,10 +56,15 @@ namespace PropGridTester
 				ttt.AddProperty(s , new TextBox(), "hhhhhhhhnnnnnnggggg");
 				
 			}
-			ttt.AddProperty("isActive?", new CheckBox(), true);
+			ttt.AddProperty("isActive?", new CheckBox(), true, CheckBox_Click );
 			List<String> name = Enum.GetNames(typeof(EObjectType)).ToList();
 			ttt.AddProperty("Choice Time!", new ComboBox(), name);
 			this.PropDictionary = ttt.PropDictionary; //update...
+		}
+
+		public void CheckBox_Click(object sender, RoutedEventArgs e)
+		{
+			Console.WriteLine("Custom Event Fires!");
 		}
 
 		private void Button1_Click(object sender, RoutedEventArgs e)

@@ -38,16 +38,15 @@ namespace PropertyGridEditor
 			PropDictionary = d;
 		}
 
-		public void AddProperty(String PropName, Control ctype, object data)
+
+		public void AddLabelProp(String PropName, ref int num)
 		{
 			if (PropDictionary.ContainsKey(PropName)) return; //avoid dict crash
 																												//add a row.
 			InnerPropGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
 
 			//add the label
-			PropDictionary.Add(PropName, data);
-			int num = PropDictionary.Count - 1;
-
+			num = InnerPropGrid.RowDefinitions.Count - 1;
 
 			Border bor = new Border() //create label then add it.
 			{
@@ -61,8 +60,6 @@ namespace PropertyGridEditor
 			bor.MouseRightButtonDown += Ctype_MouseRightButtonDown;
 			InnerPropGrid.Children.Add(bor); //add label to grid and display
 
-
-
 			Label l = new Label() //create label then add it.
 			{
 				HorizontalAlignment = HorizontalAlignment.Center,
@@ -73,10 +70,122 @@ namespace PropertyGridEditor
 				Tag = PropName
 			};
 
-			
 			Grid.SetRow(l, num);
 			Grid.SetColumn(l, 0);
 			InnerPropGrid.Children.Add(l); //add label to grid and display
+		}
+
+		/// <summary>
+		/// Add a property to the grid, And set a custom event callback.
+		/// </summary>
+		/// <param name="PropName">Name of the property to add</param>
+		/// <param name="ctype">The type of control that will be added to the grid</param>
+		/// <param name="data">The data that will be inserted/set to the control</param>
+		/// <param name="handler">the custom event handler</param>
+		public void AddProperty(String PropName, TextBox ctype, String data, KeyEventHandler handler)
+		{
+			if (PropDictionary.ContainsKey(PropName)) return; //avoid dict crash
+																												//add a row.
+
+			int num = 0;
+			//add label
+			AddLabelProp(PropName, ref num);
+			PropDictionary.Add(PropName, data);
+
+			if (data is String)
+			{
+				ctype.HorizontalAlignment = HorizontalAlignment.Stretch;
+				ctype.Margin = new Thickness(10, 2, 10, 2);
+				((TextBox)ctype).Text = (String)data;
+				ctype.Height = 30;
+
+				Grid.SetRow(ctype, num);
+				Grid.SetColumn(ctype, 1);
+				ctype.BringIntoView();
+				ctype.Tag = PropName; //used for EZ dictionary access later
+				ctype.KeyDown += handler;
+
+				InnerPropGrid.Children.Add(ctype); //add the desired control type.
+			}
+		}
+
+		/// <summary>
+		/// Add a property to the grid, And set a custom event callback.
+		/// </summary>
+		/// <param name="PropName">Name of the property to add</param>
+		/// <param name="ctype">The type of control that will be added to the grid</param>
+		/// <param name="data">The data that will be inserted/set to the control</param>
+		/// <param name="handler">the custom event handler</param>
+		public void AddProperty(String PropName, CheckBox ctype, bool data, RoutedEventHandler handler)
+		{
+			if (PropDictionary.ContainsKey(PropName)) return; //avoid dict crash
+
+			int num = 0;
+			//add label
+			AddLabelProp(PropName, ref num);
+			PropDictionary.Add(PropName, data);
+
+			ctype.HorizontalAlignment = HorizontalAlignment.Left;
+			ctype.VerticalAlignment = VerticalAlignment.Center;
+			ctype.Margin = new Thickness(10, 2, 10, 2);
+			ctype.Height = 30;
+
+			Grid.SetRow(ctype, num);
+			Grid.SetColumn(ctype, 1);
+			ctype.BringIntoView();
+			ctype.Tag = PropName; //used for EZ dictionary access later
+			((CheckBox)ctype).Click += handler;
+			((CheckBox)ctype).IsChecked = data;
+			InnerPropGrid.Children.Add(ctype); //add the desired control type.
+		}
+
+		/// <summary>
+		/// Add a property to the grid, And set a custom event callback.
+		/// </summary>
+		/// <param name="PropName">Name of the property to add</param>
+		/// <param name="ctype">The type of control that will be added to the grid</param>
+		/// <param name="data">The data that will be inserted/set to the control</param>
+		/// <param name="handler">the custom event handler</param>
+		public void AddProperty(String PropName, ComboBox ctype, List<String> data, SelectionChangedEventHandler handler)
+		{
+			if (PropDictionary.ContainsKey(PropName)) return; //avoid dict crash
+
+			int num = 0;
+			//add label
+			AddLabelProp(PropName, ref num);
+			PropDictionary.Add(PropName, data);
+
+			ctype.HorizontalAlignment = HorizontalAlignment.Left;
+			ctype.VerticalAlignment = VerticalAlignment.Center;
+			ctype.Margin = new Thickness(10, 2, 10, 2);
+			((ComboBox)ctype).ItemsSource = (List<String>)data;
+			ctype.Height = 30;
+
+			Grid.SetRow(ctype, num);
+			Grid.SetColumn(ctype, 1);
+			ctype.BringIntoView();
+			ctype.Tag = PropName; //used for EZ dictionary access later
+			((ComboBox)ctype).SelectionChanged += handler;
+			((ComboBox)ctype).SelectedIndex = 0;
+			InnerPropGrid.Children.Add(ctype); //add the desired control type.
+			
+		}
+
+		/// <summary>
+		/// Add a property to the grid with DEFAULT event call back.
+		/// </summary>
+		/// <param name="PropName">Name of the property to add</param>
+		/// <param name="ctype">The type of control that will be added to the grid</param>
+		/// <param name="data">The data that will be inserted/set to the control</param>
+		public void AddProperty(String PropName, Control ctype, object data)
+		{
+			if (PropDictionary.ContainsKey(PropName)) return; //avoid dict crash
+																												//add a row.
+
+			int num = 0;
+			//add label
+			AddLabelProp(PropName, ref num);
+			PropDictionary.Add(PropName, data);
 
 			if (ctype is TextBox)
 			{
@@ -92,7 +201,7 @@ namespace PropertyGridEditor
 					ctype.BringIntoView();
 					ctype.Tag = PropName; //used for EZ dictionary access later
 					ctype.KeyDown += Ctype_KeyDown;
-					
+
 					InnerPropGrid.Children.Add(ctype); //add the desired control type.
 				}
 			}
@@ -111,8 +220,6 @@ namespace PropertyGridEditor
 					ctype.BringIntoView();
 					ctype.Tag = PropName; //used for EZ dictionary access later
 					((ComboBox)ctype).SelectionChanged += PropGrid_SelectionChanged;
-					
-
 
 					((ComboBox)ctype).SelectedIndex = 0;
 					InnerPropGrid.Children.Add(ctype); //add the desired control type.
@@ -132,7 +239,6 @@ namespace PropertyGridEditor
 					ctype.BringIntoView();
 					ctype.Tag = PropName; //used for EZ dictionary access later
 					((CheckBox)ctype).Click += Ctype_Click;
-					
 
 					if (data is Boolean)
 						((CheckBox)ctype).IsChecked = (bool)data;
