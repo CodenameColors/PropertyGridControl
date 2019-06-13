@@ -139,6 +139,7 @@ namespace PropertyGridEditor
 					InnerPropGrid.Children.Add(ctype); //add the desired control type.
 				}
 			}
+			Grid.SetZIndex(gridSplitterVertinner, int.MaxValue);
 		}
 
 		private void Ctype_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
