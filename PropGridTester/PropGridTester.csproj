@@ -37,11 +37,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BixBite">
-      <HintPath>..\..\..\..\ProjectE_E\ProjectEE\BixBite\bin\Debug\BixBite.dll</HintPath>
-    </Reference>
     <Reference Include="PropertyGridEditor">
-      <HintPath>..\PropertyGridEditor\bin\Debug\PropertyGridEditor.dll</HintPath>
+      <HintPath>..\PropertyGridEditor\bin\Release\PropertyGridEditor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

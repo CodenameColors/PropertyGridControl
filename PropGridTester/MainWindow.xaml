@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PropGridTester"
 				xmlns:mm="clr-namespace:PropertyGridEditor;assembly=PropertyGridEditor"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        mc:Ignorable="d" Title="MainWindow" Height="450" Width="500">
 	<Grid Background="Black">
 		<Grid.RowDefinitions>
 			<RowDefinition/>
 			<RowDefinition Height="100"/>
 		</Grid.RowDefinitions>
 
-		<mm:PropGrid x:Name="ttt">
+		<mm:PropGrid Grid.Row="0" x:Name="ttt">
 			
 		</mm:PropGrid>
 		

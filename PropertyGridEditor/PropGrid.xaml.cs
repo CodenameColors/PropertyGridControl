@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BixBite.Resources;
+using DrWPF.Windows.Data;
 
 namespace PropertyGridEditor
 {
@@ -44,6 +44,8 @@ namespace PropertyGridEditor
 			PropDictionary = d;
 		}
 
+
+#region AddProperty
 
 		public void AddLabelProp(String PropName, ref int num)
 		{
@@ -251,9 +253,12 @@ namespace PropertyGridEditor
 					InnerPropGrid.Children.Add(ctype); //add the desired control type.
 				}
 			}
-			Grid.SetZIndex(gridSplitterVertinner, int.MaxValue);
+			
 		}
 
+		#endregion
+
+#region DefaultEvents
 		private void Ctype_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			CurrentProp = ((Border)sender).Tag.ToString();
@@ -331,6 +336,117 @@ namespace PropertyGridEditor
 				PropDictionary[((TextBox)sender).Tag.ToString()] = ((TextBox)sender).Text;
 			}
 		}
+		#endregion
+
+
+#region WIP
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="LabelsList">List of Labels that will be displayed.</param>
+		/// <param name="InputControls">List of controls that allow for user input.</param>
+		/// <param name="data">The data that will be placed in inputcontrols on init</param>
+		/// <param name="eventHandlers">Delegates that will be activated on eventhandlers. (keydown, mousedown, etc)</param>
+		public void AddProperty(List<Label> LabelsList, List<Control> InputControls, List<String> data)
+		{
+			//is the current number of columns enough?
+			while (InnerPropGrid.ColumnDefinitions.Count < LabelsList.Count + InputControls.Count)
+			{
+				Console.WriteLine("Adding a column!");
+				InnerPropGrid.ColumnDefinitions.Add(new ColumnDefinition() { });
+
+				//add a grid splitter!
+				GridSplitter gridSplitter = new GridSplitter() { Width = 2, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left, Background=Brushes.Gray };
+				Grid.SetColumn(gridSplitter, InnerPropGrid.ColumnDefinitions.Count - 1);
+				Grid.SetRowSpan(gridSplitter ,int.MaxValue);
+				Grid.SetZIndex(gridSplitter, int.MaxValue);
+				InnerPropGrid.Children.Add(gridSplitter);
+			}
+			//resize the columns
+			int newwidth = (int)(500/ InnerPropGrid.ColumnDefinitions.Count);
+			Console.WriteLine("Control Width: " + newwidth);
+			foreach (ColumnDefinition cd in InnerPropGrid.ColumnDefinitions)
+			{
+				cd.Width = new GridLength(newwidth);
+			}
+			
+			//add the labels to the grid
+			AddLabels(LabelsList);
+
+			//add the input controls!
+			AddInputControls(LabelsList[1].Content.ToString(), InputControls, data,LabelsList.Count);
+
+		}
+
+		private void AddInputControls(String name, List<Control> controls, List<String> data, int offset)
+		{
+			for (int i = 0; i < controls.Count; i++)
+			{
+				if (controls[i] is TextBox) {
+					
+					((TextBox)controls[i]).HorizontalAlignment = HorizontalAlignment.Stretch;
+					((TextBox)controls[i]).VerticalContentAlignment = VerticalAlignment.Center;
+					((TextBox)controls[i]).Text = data[i];
+
+					Grid.SetRow((controls[i]), InnerPropGrid.RowDefinitions.Count - 1);
+					Grid.SetColumn(controls[i], i + offset);
+					InnerPropGrid.Children.Add(controls[i]);
+					Console.WriteLine("Adding a new TextBox");
+
+					
+
+				}
+				else if (controls[i] is ComboBox)
+				{
+					((ComboBox)controls[i]).HorizontalAlignment = HorizontalAlignment.Stretch;
+					
+					Grid.SetRow((controls[i]), InnerPropGrid.RowDefinitions.Count - 1);
+					Grid.SetColumn(controls[i], i + offset);
+					InnerPropGrid.Children.Add(controls[i]);
+				}
+				else if (controls[i] is CheckBox)
+				{
+					((CheckBox)controls[i]).HorizontalAlignment = HorizontalAlignment.Left;
+					((CheckBox)controls[i]).VerticalAlignment= VerticalAlignment.Center;
+					Grid.SetRow((controls[i]), InnerPropGrid.RowDefinitions.Count - 1);
+					Grid.SetColumn(controls[i], i + offset);
+					InnerPropGrid.Children.Add(controls[i]);
+				}
+			}
+			PropDictionary.Add(name, data[0]);
+		}
+
+		private void AddLabels(List<Label> labels)
+		{
+			//add a row!
+			InnerPropGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30) });
+			int num = InnerPropGrid.RowDefinitions.Count - 1;
+			
+			//create the border. allows the right click to work on the WHOLE row
+			Border bor = new Border()
+			{
+				HorizontalAlignment = HorizontalAlignment.Stretch,
+				VerticalAlignment = VerticalAlignment.Stretch,
+				Background = Brushes.Transparent,
+				Tag = labels[0].Content.ToString()
+			};
+			Grid.SetColumnSpan(bor, 2);
+			Grid.SetRow(bor, num);
+			bor.MouseRightButtonDown += Ctype_MouseRightButtonDown;
+			InnerPropGrid.Children.Add(bor); //add label to grid and display
+
+			//add the labels to the columns!
+			for (int i = 0; i < labels.Count; i++)
+			{
+				Grid.SetRow(labels[i], num);
+				Grid.SetColumn(labels[i], i);
+				InnerPropGrid.Children.Add(labels[i]); //add label to grid and display
+			}
+		}
+
+		#endregion
+
 
 		private static UIElement GetChildren(Grid grid, int row, int column)
 		{

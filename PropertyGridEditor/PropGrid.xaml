@@ -19,7 +19,7 @@
 	</UserControl.Resources>
 	
     <Grid>
-			<ScrollViewer HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+			<ScrollViewer x:Name="grid_sv" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
 				<Grid x:Name="Property_Grid">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="30*"/>
@@ -46,7 +46,7 @@
 					<Grid.RowDefinitions>
 					</Grid.RowDefinitions>
 					<GridSplitter x:Name="gridSplitterVertinner" Grid.Column="1" Grid.RowSpan="2147483647"
-							HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="3"  Background="#FF868686" />
+							HorizontalAlignment="Left"  VerticalAlignment="Stretch" Width="3"  Background="#FF868686" Panel.ZIndex="10000"/>
 				</Grid>
 					
 				</Grid>
