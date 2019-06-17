@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DrWPF.Windows.Data;
+using BixBite.Resources;
 
 namespace PropertyGridEditor
 {
@@ -31,6 +31,12 @@ namespace PropertyGridEditor
 		{
 			InitializeComponent();
 		}
+
+		//THIS IS HERE TO ALLOW DESIGNER TO RENDER
+		//static PropGrid()
+		//{
+		//	DefaultStyleKeyProperty.OverrideMetadata(typeof(PropGrid), new FrameworkPropertyMetadata(typeof(PropGrid)));
+		//}
 
 		public PropGrid(ref ObservableDictionary<String, object> d)
 		{
@@ -264,6 +270,12 @@ namespace PropertyGridEditor
 		}
 
 		private void ClearProps_Click(object sender, RoutedEventArgs e)
+		{
+			foreach (String s in PropDictionary.Keys.ToList())
+				RemoveProperty(s);
+		}
+
+		public void ClearProperties()
 		{
 			foreach (String s in PropDictionary.Keys.ToList())
 				RemoveProperty(s);

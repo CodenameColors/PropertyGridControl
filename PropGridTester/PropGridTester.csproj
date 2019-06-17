@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BixBite">
+      <HintPath>..\..\..\..\ProjectE_E\ProjectEE\BixBite\bin\Debug\BixBite.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyGridEditor">
       <HintPath>..\PropertyGridEditor\bin\Debug\PropertyGridEditor.dll</HintPath>
     </Reference>
