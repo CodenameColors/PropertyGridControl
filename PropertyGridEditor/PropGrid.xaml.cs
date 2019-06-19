@@ -445,6 +445,66 @@ namespace PropertyGridEditor
 			}
 		}
 
+
+		public void UpdateProperty(String key, object data)
+		{
+			if (PropDictionary.ContainsKey(key))
+			{
+				PropDictionary[key] = data;
+			}
+		}
+
+		public void SetPropertyData(String PName, object data)
+		{
+			Control CurControl = (Control)FindProperty(null, PName);
+			if (CurControl is TextBox)
+				((TextBox)CurControl).Text = data.ToString();
+			else if (CurControl is CheckBox)
+				((CheckBox)CurControl).IsEnabled = (bool)data;
+			else if (CurControl is ComboBox)
+				((ComboBox)CurControl).SelectedIndex = (int)data;
+			PropDictionary[PName] = data;
+		}
+
+		/// <summary>
+		/// Search and find the property control with the given tag or name!
+		/// </summary>
+		/// <param name="Name"></param>
+		/// <param name="Tag"></param>
+		/// <returns></returns>
+		private UIElement FindProperty(String Name = null, String Tag = null)
+		{
+			if (Name != null)
+			{
+				foreach (UIElement uie in InnerPropGrid.Children)
+				{
+					if(uie is Control)
+					{
+						if (((Control)uie).Tag == null) continue;
+						if (((Control)uie).Name == Name)
+						{
+							return uie;
+						}
+					}
+				}
+			}
+			else if (Tag != null)
+			{
+				foreach (UIElement uie in InnerPropGrid.Children)
+				{
+					if (uie is Control)
+					{
+						if (((Control)uie).Tag == null) continue;
+						if (((Control)uie).Tag.ToString() == Tag)
+						{
+							return uie;
+						}
+					}
+				}
+			}
+			return null;
+		}
+
 		#endregion
 
 
